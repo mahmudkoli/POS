@@ -1,0 +1,35 @@
+﻿@model POSManagementProject.Models.ViewModels.BranchVM
+
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        <h5>
+            @Html.Label("Address : ")
+            @Html.DisplayFor(model => model.Address)
+        </h5>
+        <h5>
+            @Html.Label("Code : ")
+            @Html.DisplayFor(model => model.Code)
+        </h5>
+    </div>
+</div>
+<hr/>
+<div class="form-group row">
+    @Html.LabelFor(model => model.OrganizationId, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Organization.Name)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Contact, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Contact)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Date)
+    </span>
+</div>
+

@@ -1,0 +1,106 @@
+﻿@model POSManagementProject.Models.ViewModels.EmployeeVM
+
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.Image != null)
+        {
+        <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.Image)" class="img-responsive" width="150" height="150" />
+        }
+        else
+        {
+        <img src="~/Images/avatar.png" class="img-responsive" width="150" height="150" />
+        }
+    </div>
+    <div class="col-md-8">
+        <br />
+        <h5>
+            @Html.Label("Name : ")
+            @Html.DisplayFor(model => model.Name)
+        </h5>
+        <h5>
+            @Html.Label("Code : ")
+            @Html.DisplayFor(model => model.Code)
+        </h5>
+    </div>
+</div>
+<br /><br />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            @Html.LabelFor(model => model.NID, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.NID)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.JoiningDate, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Model.JoiningDate.ToString("D")
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.BranchId, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.Branch.Address)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Contact, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.Contact)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.Email)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.ReferenceId, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.Reference.Name)
+            </span>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group row">
+            @Html.LabelFor(model => model.EmergencyContact, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.EmergencyContact)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.FathersName, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.FathersName)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.MothersName, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.MothersName)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.PresentAddress, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.PresentAddress)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.PermanentAddress, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.PermanentAddress)
+            </span>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-4" })
+            <span class="control-label col-md-8">
+                @Html.DisplayFor(model => model.Date)
+            </span>
+        </div>
+    </div>
+</div>

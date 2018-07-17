@@ -1,0 +1,44 @@
+﻿@model POSManagementProject.Models.ViewModels.ItemCategoryVM
+
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.Image != null)
+        {
+            <img src="data:image/jpg;base64,@Convert.ToBase64String(Model.Image)" class="img-responsive" width="150" height="150"/>
+        }
+        else
+        {
+            <img src="~/Images/product.png" class="img-responsive" width="150" height="150"/>
+        }
+    </div>
+    <div class="col-md-8">
+        <br />
+        <h5>
+            @Html.Label("Name : ")
+            @Html.DisplayFor(model => model.Name)
+        </h5>
+        <h5>
+            @Html.Label("Code : ")
+            @Html.DisplayFor(model => model.Code)
+        </h5>
+    </div>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.ParentId, new {@class="control-label col-md-4"})
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Parent.Name)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Description)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Date)
+    </span>
+</div>
+

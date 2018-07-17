@@ -1,0 +1,74 @@
+﻿@model POSManagementProject.Models.EntityModels.ExpenseOperationInformation
+
+@{
+    ViewBag.Title = "Result";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.Label("Expense No : ")
+        @Html.DisplayFor(model => model.ExpenseNo)
+        <br />
+        @Html.Label("Branch : ")
+        @Html.DisplayFor(model => model.Branch.Address)
+        <br />
+        @Html.Label("Employee : ")
+        @Html.DisplayFor(model => model.Employee.Name)
+        <br />
+        @Html.Label("Date : ")
+        @Html.DisplayFor(model => model.ExpenseDate)
+    </div>
+    <div class="col-md-6"></div>
+    <br /><br />
+
+    <div class="col-md-12">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>@Html.Label("SL")</th>
+                    <th>@Html.Label("Item")</th>
+                    <th>@Html.Label("Reason")</th>
+                    <th>@Html.Label("Qty")</th>
+                    <th>@Html.Label("Amount")</th>
+                    <th>@Html.Label("Line Total")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int sl = 0; }
+                @foreach (var item in Model.ExpenseItems)
+                {
+                    sl++;
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => sl)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LineTotal)</td>
+                    </tr>
+                }
+                <tr style="border: 0">
+                    <td colspan="3"></td>
+                    <td colspan="2">@Html.Label("Total Amount")</td>
+                    <td>@Html.DisplayFor(model => model.TotalAmount)</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-9 col-md-3">
+        @Html.Hidden("Hidden", @Model.ExpenseNo, new { @id = "hiddenExpenseNo" })
+        <input type="button" value="Export To Pdf" class="btn btn-primary" onclick="expenseOpExportToPdf()" />
+        <input type="button" value="Cancel" class="btn btn-default" id="redirectIndex" />
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/Scripts/Project/ExpenseOperation.js"></script>
+}

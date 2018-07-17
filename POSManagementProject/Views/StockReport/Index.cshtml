@@ -1,0 +1,70 @@
+﻿@model POSManagementProject.Models.ViewModels.StockReportVM
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Stock Report</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Branch", new { @class = "control-label" })<br />
+            @Html.DropDownList("BranchId", Model.SelectListBranch, new { @class = "form-control", @id = "branchId" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Action", new { @class = "control-label" })<br />
+            <input type="submit" class="btn btn-primary" value="Show" onclick="return CheckReportValue()" />
+            <input type="button" class="btn btn-primary" value="Export to Pdf" id="stockReportExportToPdf" />
+        </div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+}
+<br/><br/>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3 class="panel-title">Stock Report</h3></div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.Label("SL")</th>
+                    <th>@Html.Label("Item Name")</th>
+                    <th>@Html.Label("Stock Qty")</th>
+                    <th>@Html.Label("Average Price")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int sl = 0; }
+                @foreach (var item in Model.StockList)
+                {
+                    sl++;
+                    <tr>
+                        <td>@Html.DisplayFor(modleItem => sl)</td>
+                        <td>@Html.DisplayFor(modleItem => item.Item.Name)</td>
+                        <td>@Html.DisplayFor(modleItem => item.StockQuantity)</td>
+                        <td>@String.Format("{0:N}", item.AveragePrice)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Project/StockReport.js"></script>
+    <script>
+        $(function () {
+            
+        });
+    </script>
+}
+

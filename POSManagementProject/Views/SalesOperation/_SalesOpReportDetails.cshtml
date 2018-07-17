@@ -1,0 +1,87 @@
+﻿@model POSManagementProject.Models.EntityModels.SalesOperationInformation
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.Label("Sales No : ")
+        @Html.DisplayFor(model => model.SalesNo)
+        <br />
+        @Html.Label("Branch : ")
+        @Html.DisplayFor(model => model.Branch.Address)
+        <br />
+        @Html.Label("Sold By : ")
+        @Html.DisplayFor(model => model.Employee.Name)
+        <br />
+        @Html.Label("Customer Name : ")
+        @Html.DisplayFor(model => model.CustomerName)
+        <br />
+        @Html.Label("Customer Contact : ")
+        @Html.DisplayFor(model => model.CustomerContact)
+        <br />
+        @Html.Label("Purchase Date : ")
+        @Html.DisplayFor(model => model.SalesDate)
+    </div>
+    <div class="col-md-6"></div>
+    <br /><br />
+
+    <div class="col-md-12">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>@Html.Label("SL")</th>
+                    <th>@Html.Label("Item")</th>
+                    <th>@Html.Label("Qty")</th>
+                    <th>@Html.Label("price")</th>
+                    <th>@Html.Label("Line Total")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int sl = 0; }
+                @foreach (var item in Model.SalesItems)
+                {
+                    sl++;
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => sl)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LineTotal)</td>
+                    </tr>
+                }
+                <tr style="border: 0">
+                    <td colspan="2"></td>
+                    <td colspan="2">@Html.Label("Total Amount")</td>
+                    <td>@Html.DisplayFor(model => model.TotalAmount)</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">@Html.Label("Discount Amount")</td>
+                    <td>@Html.DisplayFor(model => model.DiscountAmount)</td>
+                </tr>
+                @{
+                    double subTotalAmount = (double)(Model.TotalAmount - Model.DiscountAmount);
+                    double vatAmount = (double)(subTotalAmount * (Model.VAT / 100));
+                }
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">@Html.Label("Sub Total Amount")</td>
+                    <td>@Html.DisplayFor(model => @subTotalAmount)</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">@Html.Label("VAT (" + @Model.VAT + "%)")</td>
+                    <td>@Html.DisplayFor(model => @vatAmount)</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">@Html.Label("Payable Amount")</td>
+                    <td>@Html.DisplayFor(model => model.PayableAmount)</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+﻿@model POSManagementProject.Models.ViewModels.PurchaseOperationInformationVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h4>Purchase Operation</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PurchaseNo)
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.BranchId, new { @class = "control-label" })
+                    </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.BranchId, Model.SelectListBranch, new {@class = "form-control", @id = "branchId"})
+                            @Html.ValidationMessageFor(model => model.BranchId, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.EmployeeId, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.EmployeeId, Model.SelectListEmployee, new { @class = "form-control", @id = "employeeId", @disabled = true })
+                        @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-9">
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h3 class="panel-title">Purchase Operation</h3></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Item Name", new { @class = "control-label" })<br />
+                                @Html.DropDownList("ItemName", Model.SelectListItem, new { @class = "form-control chosen-select", @id = "itemName" })
+                            </div>
+                            <div class="col-md-3">
+                                @Html.Label("Quantity", new { @class = "control-label" })<br />
+                                @Html.TextBox("ItemQuantity", null, new { @class = "form-control", @id = "itemQuantity" })
+                            </div>
+                            <div class="col-md-3">
+                                @Html.Label("Unit Price", new { @class = "control-label" })<br />
+                                @Html.TextBox("ItemUnitPrice", null, new { @class = "form-control", @id = "itemUnitPrice" })
+                            </div>
+                            <div class="col-md-3">
+                                @Html.Label("Action", new { @class = "control-label" })<br />
+                                <input type="button" class="btn btn-primary btn-sm" id="addPurchase" value="Add" />
+                            </div>
+                        </div>
+                        <br /><br />
+                        <table class="table table-bordered" id="purchaseTable">
+                            <thead class="text-center">
+                                <tr><th>SL</th><th>Item</th><th>Qty</th><th>Price</th><th>Line Total</th><th>Action</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h3 class="panel-title">Purchase Summary</h3></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SupplierId, new { @class = "control-label col-md-6" })
+                            @Html.DropDownListFor(model => model.SupplierId, Model.SelectListSupplier, new { @class = "form-control col-md-6" })
+                            @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PurchaseDate, new { @class = "control-label col-md-6" })
+                            @Html.TextBoxFor(model => model.PurchaseDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker col-md-6" })
+                            @Html.ValidationMessageFor(model => model.PurchaseDate, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TotalAmount, new { @class = "control-label col-md-6" })
+                            @Html.TextBoxFor(model => model.TotalAmount, "", new { @class = "form-control col-md-6", id = "totalAmount", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PaidAmount, new { @class = "control-label col-md-6" })
+                            @Html.TextBoxFor(model => model.PaidAmount, "", new { @class = "form-control col-md-6", id = "paidAmount" })
+                            @Html.ValidationMessageFor(model => model.PaidAmount, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DueAmount, new { @class = "control-label col-md-6" })
+                            @Html.TextBoxFor(model => model.DueAmount, "", new { @class = "form-control col-md-6", id = "dueAmount", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.DueAmount, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Remarks, new { @class = "control-label col-md-6" })
+                            @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control col-md-6" })
+                            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-6 col-md-6">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+}
+
+<link href="~/Content/Project/chosen.min.css" rel="stylesheet" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Project/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/Project/PurchaseOperation.js"></script>
+    <script>
+        $(function () {
+
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                minDate: '-1M',
+                maxDate: '+1D'
+
+            });
+
+            $(".chosen-select").chosen({
+                allow_single_deselect: true
+            });
+
+        });
+    </script>
+}

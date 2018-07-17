@@ -1,0 +1,13 @@
+﻿@using POSManagementProject.Models
+
+@{
+    ViewBag.Title = "BarCode";
+}
+
+<h2> BarCode </h2>
+
+@{
+    var a = BarCodeGenerate.BarcodeImageGenerator("123A45678"); 
+    <img src = "@Url.Content(a)" alt = "Alternate Text" width = "400" height = "100" />
+} 
+

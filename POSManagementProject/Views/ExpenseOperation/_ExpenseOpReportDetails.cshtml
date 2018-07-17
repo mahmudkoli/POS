@@ -1,0 +1,56 @@
+﻿@model POSManagementProject.Models.EntityModels.ExpenseOperationInformation
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.Label("Expense No : ")
+        @Html.DisplayFor(model => model.ExpenseNo)
+        <br />
+        @Html.Label("Branch : ")
+        @Html.DisplayFor(model => model.Branch.Address)
+        <br />
+        @Html.Label("Expense By : ")
+        @Html.DisplayFor(model => model.Employee.Name)
+        <br />
+        @Html.Label("Expense Date : ")
+        @Html.DisplayFor(model => model.ExpenseDate)
+    </div>
+    <div class="col-md-6"></div>
+    <br /><br />
+
+    <div class="col-md-12">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>@Html.Label("SL")</th>
+                    <th>@Html.Label("Item")</th>
+                    <th>@Html.Label("Reason")</th>
+                    <th>@Html.Label("Qty")</th>
+                    <th>@Html.Label("Amount")</th>
+                    <th>@Html.Label("Line Total")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int sl = 0; }
+                @foreach (var item in Model.ExpenseItems)
+                {
+                    sl++;
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => sl)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Reason)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LineTotal)</td>
+                    </tr>
+                }
+                <tr style="border: 0">
+                    <td colspan="3"></td>
+                    <td colspan="2">@Html.Label("Total Amount")</td>
+                    <td>@Html.DisplayFor(model => model.TotalAmount)</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

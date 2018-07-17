@@ -1,0 +1,116 @@
+﻿@model POSManagementProject.Models.ViewModels.ExpenseOperationInformationVM
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Purchase Report</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Branch", new { @class = "control-label" })<br />
+            @Html.DropDownList("BranchId", Model.SelectListBranch, new { @class = "form-control", @id = "branchId" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("From Date", new { @class = "control-label" })<br />
+            @Html.TextBox("FromDate", "", new { @class = "form-control datepicker", @id = "fromDate" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("To Date", new { @class = "control-label" })<br />
+            @Html.TextBox("ToDate", "", new { @class = "form-control datepicker", @id = "toDate" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Action", new { @class = "control-label" })<br />
+            <input type="submit" class="btn btn-primary" value="Show" onclick="return CheckReportValue()" />
+            <input type="button" class="btn btn-primary" value="Export to Pdf" id="expenseReportExportToPdf" />
+        </div>
+    </div>
+}
+<br /><br />
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3 class="panel-title">Expense Report</h3></div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover table-bordered" id="expenseReportTable">
+            <thead>
+                <tr>
+                    <th>@Html.Label("SL")</th>
+                    <th>@Html.Label("Date")</th>
+                    <th>@Html.Label("Branch")</th>
+                    <th>@Html.Label("Employee")</th>
+                    <th>@Html.Label("Expense Total")</th>
+                    <th>@Html.Label("Action")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int sl = 0; double totalAmount = 0;}
+                @foreach (var item in Model.ExpenseOpInfoList)
+            {
+                sl++;
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => sl)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ExpenseDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Branch.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Employee.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" onclick="expenseOpReportDetails(@item.Id)"
+                               href='#'>
+                                <i class="fa fa-eye fa-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    totalAmount += item.TotalAmount;
+                }
+                <tr>
+                    <td colspan="3"></td>
+                    <td>@Html.Label("Total Amount")</td>
+                    <td>@totalAmount</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Start Details Modal -->
+<div class="modal fade" id="detailsModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="text-primary">Expense Report Details</h3>
+            </div>
+            <div class="modal-body" id="detailsModalContent">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Details Modal -->
+
+
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+
+            $(".datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                maxDate: '+1D'
+
+            });
+
+            $("#expenseReportTable").DataTable();
+
+        });
+    </script>
+    <script src="~/Scripts/Project/ExpenseOperation.js"></script>
+}

@@ -1,0 +1,34 @@
+﻿@model POSManagementProject.Models.ViewModels.ExpenseCategoryVM
+
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Name)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Code, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Code)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.ParentId, new {@class="control-label col-md-4"})
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Parent.Name)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Description)
+    </span>
+</div>
+<div class="form-group row">
+    @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-4" })
+    <span class="control-label col-md-8">
+        @Html.DisplayFor(model => model.Date)
+    </span>
+</div>
+

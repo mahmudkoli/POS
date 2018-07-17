@@ -1,0 +1,201 @@
+﻿@model POSManagementProject.Models.ViewModels.IncomeReportVM
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Income Report</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("Branch", new { @class = "control-label" })<br />
+            @Html.DropDownList("BranchId", Model.SelectListBranch, new { @class = "form-control", @id = "branchId" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("From Date", new { @class = "control-label" })<br />
+            @Html.TextBox("FromDate", "", new { @class = "form-control datepicker", @id = "fromDate" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("To Date", new { @class = "control-label" })<br />
+            @Html.TextBox("ToDate", "", new { @class = "form-control datepicker", @id = "toDate" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Action", new { @class = "control-label" })<br />
+            <input type="submit" class="btn btn-primary" value="Show" onclick="return CheckReportValue()" />
+            <input type="button" class="btn btn-primary" value="Export to Pdf" id="incomeReportExportToPdf" />
+        </div>
+    </div>
+}
+
+<br/><br/>
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h3 class="panel-title">Purchase Report</h3></div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Html.Label("SL")</th>
+                            <th>@Html.Label("Date")</th>
+                            <th>@Html.Label("Purchase Count")</th>
+                            <th>@Html.Label("Purchase Amount")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int sl = 0;
+                            double totalPurchaseAmount = 0; }
+                        @foreach (var item in Model.IncomePurchaseReportList)
+            {
+                sl++;
+                            <tr>
+                                <td>@Html.DisplayFor(modleItem => sl)</td>
+                                <td>@String.Format("{0:d}", item.PurchaseDate)</td>
+                                <td>@Html.DisplayFor(modleItem => item.PurchaseCount)</td>
+                                <td>@String.Format("{0:N}", item.PurchaseTotalAmount)</td>
+                            </tr>
+
+                            totalPurchaseAmount += item.PurchaseTotalAmount;
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>@Html.Label("Total Amount")</td>
+                            <td>@String.Format("{0:N}", totalPurchaseAmount)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+        <div class="col-md-6">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="panel-title">Sales Report</h3></div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>@Html.Label("SL")</th>
+                                <th>@Html.Label("Date")</th>
+                                <th>@Html.Label("Sales Count")</th>
+                                <th>@Html.Label("Sales Amount")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int sls = 0;
+                                double totalSalesAmount = 0; }
+                            @foreach (var item in Model.IncomeSalesReportList)
+            {
+                sls++;
+                                <tr>
+                                    <td>@Html.DisplayFor(modleItem => sls)</td>
+                                    <td>@String.Format("{0:d}", item.SalesDate)</td>
+                                    <td>@Html.DisplayFor(modleItem => item.SalesCount)</td>
+                                    <td>@String.Format("{0:N}", item.SalesTotalAmount)</td>
+                                </tr>
+
+                                totalSalesAmount += item.SalesTotalAmount;
+                            }
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>@Html.Label("Total Amount")</td>
+                                <td>@String.Format("{0:N}", totalSalesAmount)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h3 class="panel-title">Expense Report</h3></div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>@Html.Label("SL")</th>
+                        <th>@Html.Label("Date")</th>
+                        <th>@Html.Label("Expense Count")</th>
+                        <th>@Html.Label("Expense Amount")</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @{ int sle = 0;
+                        double totalExpenseAmount = 0; }
+                    @foreach (var item in Model.IncomeExpenseReportList)
+                    {
+                        sle++;
+                        <tr>
+                            <td>@Html.DisplayFor(modleItem => sle)</td>
+                            <td>@String.Format("{0:d}", item.ExpenseDate)</td>
+                            <td>@Html.DisplayFor(modleItem => item.ExpenseCount)</td>
+                            <td>@String.Format("{0:N}", item.ExpenseTotalAmount)</td>
+                        </tr>
+
+                        totalExpenseAmount += item.ExpenseTotalAmount;
+                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.Label("Total Amount")</td>
+                        <td>@String.Format("{0:N}", totalExpenseAmount)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">Summary</h3></div>
+        <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>@Html.Label("Total Purchase")</th>
+                <th>@Html.Label("Total Sales")</th>
+                <th>@Html.Label("Total Expense")</th>
+                <th>@Html.Label("Total Profit")</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                @{ double totalProfit = totalSalesAmount - (totalPurchaseAmount+totalExpenseAmount); }
+                <td>@String.Format("{0:N}", totalPurchaseAmount)</td>
+                <td>@String.Format("{0:N}", totalSalesAmount)</td>
+                <td>@String.Format("{0:N}", totalExpenseAmount)</td>
+                <td>@String.Format("{0:N}", totalProfit)</td>
+            </tr>
+            </tbody>
+        </table></div></div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/Project/IncomeReport.js"></script>
+    <script>
+            $(function () {
+
+                $(".datepicker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    maxDate: '+1D'
+
+                });
+
+            });
+    </script>
+}
